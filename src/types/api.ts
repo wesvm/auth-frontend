@@ -1,13 +1,21 @@
 import type { User } from "@/types/models"
 
+export interface ApiResponse<T = any> {
+  status: number
+  message: string
+  data?: T
+}
+
 export interface LoginRequest {
   login: string
   password: string
 }
 
 export interface LoginResponse {
+  account: User
   access_token: string
-  user: User
+  token_type: string
+  expires_in: number
 }
 
 export interface RegisterRequest {

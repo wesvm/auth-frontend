@@ -8,8 +8,8 @@ export const Route = createFileRoute('/login')({
 
 function Login() {
   return (
-    <div className="flex min-h-svh items-center justify-center">
-      <Card className="w-full max-w-sm mx-auto">
+    <div className="flex min-h-svh items-center justify-center px-4">
+      <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
           <CardDescription>Enter your credentials to access your account.</CardDescription>

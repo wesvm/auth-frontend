@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Link } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 import { ReusableForm } from '@/components/reusable-form'
 import { Button } from '@/components/ui/button'
@@ -19,7 +20,7 @@ export const LoginForm = () => {
   })
 
   return (
-    <ReusableForm form={form} onSubmit={login}>
+    <ReusableForm form={form} onSubmit={login} className="gap-5">
       <FormField
         control={form.control}
         name="login"
@@ -38,12 +39,20 @@ export const LoginForm = () => {
         control={form.control}
         name="password"
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>Password</FormLabel>
+          <FormItem className="flex flex-col-reverse">
             <FormControl>
               <Input type="password" placeholder="••••••••" disabled={isLoggingIn} {...field} />
             </FormControl>
             <FormMessage />
+            <div className="flex items-center justify-between">
+              <FormLabel>Password</FormLabel>
+              <Link
+                to="/forgot-password"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Forgot password?
+              </Link>
+            </div>
           </FormItem>
         )}
       />
@@ -51,6 +60,15 @@ export const LoginForm = () => {
       <Button type="submit" className="w-full" disabled={isLoggingIn}>
         {isLoggingIn ? 'Logging in...' : 'Login'}
       </Button>
+
+      <div className="flex flex-col border-t">
+        <div className="text-sm text-center text-muted-foreground">
+          Don't have an account?{' '}
+          <Link to="/signup" className="text-foreground hover:underline">
+            Sign up
+          </Link>
+        </div>
+      </div>
     </ReusableForm>
   )
 }

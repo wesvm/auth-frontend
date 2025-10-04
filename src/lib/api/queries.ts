@@ -1,20 +1,5 @@
 import { api } from '@/lib/api/client'
-import type { LoginRequest, LoginResponse, RegisterRequest } from '@/types/api'
 import type { User } from '@/types/models'
-
-export const authApi = {
-  login: (data: LoginRequest) =>
-    api.post<LoginResponse>('/auth/login', data),
-
-  register: (data: RegisterRequest) =>
-    api.post<LoginResponse>('/auth/register', data),
-
-  logout: () =>
-    api.post('/auth/logout'),
-
-  me: () =>
-    api.get<User>('/auth/me'),
-}
 
 export const usersApi = {
   getAll: () =>

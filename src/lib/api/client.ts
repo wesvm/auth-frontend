@@ -1,4 +1,5 @@
-import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios'
+import axios, { type AxiosError, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios'
+import type { ApiResponse } from '@/types/api'
 
 export const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api',
@@ -26,34 +27,28 @@ apiClient.interceptors.request.use(
 
 // Response interceptor - Handle responses
 apiClient.interceptors.response.use(
-  (response) => {
-    // Any status code within the range of 2xx will trigger this function
-    return response
+  (response: AxiosResponse<ApiResponse>) => {
+    // Extraer solo la data del ApiResponse
+    // Si la respuesta tiene data, la devuelve, sino devuelve la respuesta completa
+    return response.data.data !== undefined ? { ...response, data: response.data.data } : response
   },
-  (error: AxiosError) => {
-    // Any status codes outside the range of 2xx will trigger this function
-
+  (error: AxiosError<ApiResponse>) => {
     // Network error
     if (!error.response) {
       console.error('Network Error:', error.message)
-      const { name: _name, message: _message, ...restError } = error
       return Promise.reject({
-        name: 'NetworkError',
+        ...error,
         message: 'Network connection failed',
-        ...restError,
       })
     }
-
-    // Server returned an error response
-    const status = error.response.status
 
     // Log errors in development
     if (import.meta.env.DEV) {
       console.error('API Error:', {
-        status,
+        status: error.response.status,
+        message: error.response.data?.message,
         url: error.config?.url,
         method: error.config?.method,
-        data: error.response.data,
       })
     }
 

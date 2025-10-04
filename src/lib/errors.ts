@@ -10,31 +10,6 @@ export const handleApiError = (error: any): ApiError => {
   // Extract status code
   const status = error?.response?.status || error?.status
 
-  // Handle authentication/authorization errors
-  if (status && [401, 403].includes(status)) {
-    localStorage.removeItem('access_token')
-
-    toast.error(
-      status === 401 ? "Session expired" : "Access denied",
-      {
-        description: status === 401
-          ? "Please log in again"
-          : "You don't have permission to perform this action",
-      }
-    )
-
-    // Redirect to login after a brief delay so user can see the toast
-    setTimeout(() => {
-      window.location.href = '/login'
-    }, 1000)
-
-    return {
-      message: status === 401 ? "Unauthorized" : "Forbidden",
-      status,
-      code: status === 401 ? "UNAUTHORIZED" : "FORBIDDEN"
-    }
-  }
-
   // Network error
   if (error?.name === 'NetworkError' || !navigator.onLine) {
     toast.error("Connection error", {

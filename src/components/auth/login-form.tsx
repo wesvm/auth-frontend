@@ -28,7 +28,13 @@ export const LoginForm = () => {
           <FormItem>
             <FormLabel>Username</FormLabel>
             <FormControl>
-              <Input type="text" placeholder="john_doe" disabled={isLoggingIn} {...field} />
+              <Input
+                type="text"
+                placeholder="elon"
+                autoComplete="username"
+                disabled={isLoggingIn}
+                {...field}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -40,10 +46,16 @@ export const LoginForm = () => {
         name="password"
         render={({ field }) => (
           <FormItem className="flex flex-col-reverse">
-            <FormControl>
-              <Input type="password" placeholder="••••••••" disabled={isLoggingIn} {...field} />
-            </FormControl>
             <FormMessage />
+            <FormControl>
+              <Input
+                type="password"
+                placeholder="••••••••"
+                autoComplete="current-password"
+                disabled={isLoggingIn}
+                {...field}
+              />
+            </FormControl>
             <div className="flex items-center justify-between">
               <FormLabel>Password</FormLabel>
               <Link
@@ -64,7 +76,7 @@ export const LoginForm = () => {
       <div className="flex flex-col border-t">
         <div className="text-sm text-center text-muted-foreground">
           Don't have an account?{' '}
-          <Link to="/signup" className="text-foreground hover:underline">
+          <Link to="/sign-up" className="text-foreground hover:underline">
             Sign up
           </Link>
         </div>

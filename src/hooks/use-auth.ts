@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
-import { authApi } from '@/lib/api/auth'
-import type { LoginRequest } from '@/types/api'
+import { authApi, authService } from '@/lib/api/auth'
+import type { LoginSchema, ResetPasswordSchema, TwoFASchema } from '@/lib/validations/auth'
 
 export const isAuthenticated = (): boolean => {
   return !!localStorage.getItem('access_token')
@@ -27,10 +27,17 @@ const useAuth = () => {
   const loginMutation = useMutation({
     mutationFn: authApi.login,
     onSuccess: (data) => {
-      // Guardar token
-      localStorage.setItem('access_token', data.access_token)
+      if ('ticket' in data) {
+        toast.info('Two-Factor Authentication Required', {
+          description: 'Please enter your 6-digit code',
+        })
 
-      // Guardar info del usuario en cache
+        authService.set2FATicket(data.ticket)
+        navigate({ to: '/verify-2fa' })
+        return
+      }
+
+      authService.setToken(data.access_token)
       queryClient.setQueryData(['auth', 'me'], data.account)
 
       toast.success('Welcome back!', {
@@ -38,41 +45,61 @@ const useAuth = () => {
       })
 
       navigate({ to: '/' })
-    }
+    },
   })
 
-  // const registerMutation = useMutation({
-  //   mutationFn: authApi.register,
-  //   onSuccess: (data) => {
-  //     localStorage.setItem('access_token', data.access_token)
-  //     queryClient.setQueryData(['auth', 'me'], data.account)
+  const registerMutation = useMutation({
+    mutationFn: authApi.register,
+    onSuccess: () => {
+      toast.success('Account created successfully! Please verify your email.')
 
-  //     toast.success('Account created!', {
-  //       description: 'Welcome to the platform',
-  //     })
+      navigate({ to: '/verify-email' })
+    },
+  })
 
-  //     navigate({ to: '/' })
-  //   },
-  //   onError: () => {
-  //     toast.error('Registration failed', {
-  //       description: 'Please check your information and try again',
-  //     })
-  //   },
-  // })
+  const verify2FAMutation = useMutation({
+    mutationFn: authApi.verify2fa,
+    onSuccess: (data) => {
+      authService.clear2FATicket()
+      authService.setToken(data.access_token)
+      queryClient.setQueryData(['auth', 'me'], data.account)
+
+      toast.success('Welcome back!', {
+        description: `Logged in as ${data.account.email}`,
+      })
+      navigate({ to: '/' })
+    },
+  })
+
+  const forgotPasswordMutation = useMutation({
+    mutationFn: authApi.forgotPassword,
+    onSuccess: (data) => {
+      toast.success(data.message)
+    },
+  })
+
+  const resetPasswordMutation = useMutation({
+    mutationFn: authApi.resetPassword,
+    onSuccess: (data) => {
+      toast.success(data.message)
+      navigate({ to: '/login' })
+    },
+  })
 
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
     onSuccess: () => {
-      localStorage.removeItem('access_token')
+      authService.clearAll()
       queryClient.clear()
       toast.success('Logged out successfully')
       navigate({ to: '/login' })
     },
   })
 
-  const login = (data: LoginRequest) => loginMutation.mutate(data)
-  //const register = (data: RegisterRequest) => registerMutation.mutate(data)
+  const login = (data: LoginSchema) => loginMutation.mutate(data)
   const logout = () => logoutMutation.mutate()
+  const verify2FA = (data: TwoFASchema) => verify2FAMutation.mutate(data)
+  const resetPassword = (data: ResetPasswordSchema) => resetPasswordMutation.mutate(data)
   const isAuthenticated = !!user && !!localStorage.getItem('access_token')
 
   return {
@@ -84,13 +111,20 @@ const useAuth = () => {
 
     // Actions
     login,
-    // register,
+    verify2FA,
+    resetPassword,
     logout,
+
+    // Mutations
+    registerMutation,
+    forgotPasswordMutation,
 
     // Mutation states
     isLoggingIn: loginMutation.isPending,
-    // isRegistering: registerMutation.isPending,
+    isVerifying2FA: verify2FAMutation.isPending,
+    isRegistering: registerMutation.isPending,
     isLoggingOut: logoutMutation.isPending,
+    isResetingPassword: resetPasswordMutation.isPending,
   }
 }
 

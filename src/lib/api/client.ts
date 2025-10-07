@@ -1,4 +1,5 @@
 import axios, { type AxiosError, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios'
+import { authService } from '@/lib/api/auth'
 import type { ApiResponse } from '@/types/api'
 
 export const apiClient = axios.create({
@@ -12,7 +13,7 @@ export const apiClient = axios.create({
 // Request interceptor - Add auth token
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem('access_token')
+    const token = authService.getToken()
 
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`

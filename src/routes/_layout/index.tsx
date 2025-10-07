@@ -28,7 +28,7 @@ function Index() {
   }
 
   return (
-    <div className="space-y-6 pb-16 md:pb-0">
+    <div className="space-y-6">
       <div>
         <h2 className="text-3xl font-bold tracking-tight">
           Welcome back, {user?.name?.split(' ')[0]}!

@@ -64,6 +64,29 @@ function Layout() {
       <main className="container mx-auto px-4 py-8 max-w-2xl">
         <Outlet />
       </main>
+
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/95">
+        <div className="flex items-center justify-around h-16 px-4">
+          <Link to="/" className="flex-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              className={`w-full ${!isSettingsPage ? 'bg-accent' : ''}`}
+            >
+              <Home className="size-5" />
+            </Button>
+          </Link>
+          <Link to="/settings" className="flex-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              className={`w-full ${isSettingsPage ? 'bg-accent' : ''}`}
+            >
+              <Settings className="size-5" />
+            </Button>
+          </Link>
+        </div>
+      </nav>
     </div>
   )
 }

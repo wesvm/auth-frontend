@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { authApi, authService } from '@/lib/api/auth'
-import type { LoginSchema, ResetPasswordSchema, TwoFASchema } from '@/lib/validations/auth'
+import type { LoginSchema, TwoFASchema } from '@/lib/validations/auth'
 
 export const isAuthenticated = (): boolean => {
   return !!localStorage.getItem('access_token')
@@ -82,7 +82,6 @@ const useAuth = () => {
     mutationFn: authApi.resetPassword,
     onSuccess: (data) => {
       toast.success(data.message)
-      navigate({ to: '/login' })
     },
   })
 
@@ -99,7 +98,6 @@ const useAuth = () => {
   const login = (data: LoginSchema) => loginMutation.mutate(data)
   const logout = () => logoutMutation.mutate()
   const verify2FA = (data: TwoFASchema) => verify2FAMutation.mutate(data)
-  const resetPassword = (data: ResetPasswordSchema) => resetPasswordMutation.mutate(data)
   const isAuthenticated = !!user && !!localStorage.getItem('access_token')
 
   return {
@@ -112,19 +110,18 @@ const useAuth = () => {
     // Actions
     login,
     verify2FA,
-    resetPassword,
     logout,
 
     // Mutations
     registerMutation,
     forgotPasswordMutation,
+    resetPasswordMutation,
 
     // Mutation states
     isLoggingIn: loginMutation.isPending,
     isVerifying2FA: verify2FAMutation.isPending,
     isRegistering: registerMutation.isPending,
     isLoggingOut: logoutMutation.isPending,
-    isResetingPassword: resetPasswordMutation.isPending,
   }
 }
 

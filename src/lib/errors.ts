@@ -32,26 +32,56 @@ export const handleApiError = (error: any): ApiError => {
       }
     }
 
-    // For general 401/403 errors, clear all auth data and redirect to login
-    authService.clearAll()
+    // Specific handling for invalid credentials
+    if (errorData?.message?.includes('credentials')) {
+      toast.error("Invalid credentials")
 
-    toast.error(
-      status === 401 ? "Session expired" : "Access denied",
-      {
-        description: status === 401
-          ? "Your session has expired. Please log in again"
-          : "You don't have permission to access this resource",
+      return {
+        message: "Invalid credentials",
+        status,
+        code: "INVALID_CREDENTIALS"
       }
-    )
+    }
 
-    setTimeout(() => {
-      window.location.href = '/login'
-    }, 1500)
+    if (errorData?.message?.toLowerCase().includes('unauthenticated')) {
+      authService.clearAll()
+
+      toast.error("Session expired", {
+        description: "Your session has expired. Please log in again",
+      })
+
+      setTimeout(() => {
+        window.location.href = '/login'
+      }, 1500)
+
+      return {
+        message: "Unauthenticated",
+        status,
+        code: "SESSION_EXPIRED"
+      }
+    }
+
+    // For general 403 errors (not 401), handle as forbidden
+    if (status === 403) {
+      toast.error("Access denied", {
+        description: "You don't have permission to access this resource",
+      })
+
+      return {
+        message: "Forbidden",
+        status,
+        code: "FORBIDDEN"
+      }
+    }
+
+    toast.error("Authentication required", {
+      description: "Please log in to continue",
+    })
 
     return {
-      message: status === 401 ? "Unauthorized" : "Forbidden",
+      message: errorData?.message || "Unauthorized",
       status,
-      code: status === 401 ? "SESSION_EXPIRED" : "FORBIDDEN"
+      code: "UNAUTHORIZED"
     }
   }
 

@@ -9,16 +9,28 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SignupRouteImport } from './routes/signup'
+import { Route as VerifyEmailRouteImport } from './routes/verify-email'
+import { Route as Verify2faRouteImport } from './routes/verify-2fa'
+import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
-import { Route as LayoutAboutRouteImport } from './routes/_layout/about'
+import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
 
-const SignupRoute = SignupRouteImport.update({
-  id: '/signup',
-  path: '/signup',
+const VerifyEmailRoute = VerifyEmailRouteImport.update({
+  id: '/verify-email',
+  path: '/verify-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Verify2faRoute = Verify2faRouteImport.update({
+  id: '/verify-2fa',
+  path: '/verify-2fa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignUpRoute = SignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -40,24 +52,28 @@ const LayoutIndexRoute = LayoutIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutAboutRoute = LayoutAboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => LayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
-  '/about': typeof LayoutAboutRoute
+  '/sign-up': typeof SignUpRoute
+  '/verify-2fa': typeof Verify2faRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/settings': typeof LayoutSettingsRoute
   '/': typeof LayoutIndexRoute
 }
 export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
-  '/about': typeof LayoutAboutRoute
+  '/sign-up': typeof SignUpRoute
+  '/verify-2fa': typeof Verify2faRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/settings': typeof LayoutSettingsRoute
   '/': typeof LayoutIndexRoute
 }
 export interface FileRoutesById {
@@ -65,22 +81,40 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
-  '/_layout/about': typeof LayoutAboutRoute
+  '/sign-up': typeof SignUpRoute
+  '/verify-2fa': typeof Verify2faRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/_layout/settings': typeof LayoutSettingsRoute
   '/_layout/': typeof LayoutIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/forgot-password' | '/login' | '/signup' | '/about' | '/'
+  fullPaths:
+    | '/forgot-password'
+    | '/login'
+    | '/sign-up'
+    | '/verify-2fa'
+    | '/verify-email'
+    | '/settings'
+    | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/forgot-password' | '/login' | '/signup' | '/about' | '/'
+  to:
+    | '/forgot-password'
+    | '/login'
+    | '/sign-up'
+    | '/verify-2fa'
+    | '/verify-email'
+    | '/settings'
+    | '/'
   id:
     | '__root__'
     | '/_layout'
     | '/forgot-password'
     | '/login'
-    | '/signup'
-    | '/_layout/about'
+    | '/sign-up'
+    | '/verify-2fa'
+    | '/verify-email'
+    | '/_layout/settings'
     | '/_layout/'
   fileRoutesById: FileRoutesById
 }
@@ -88,16 +122,32 @@ export interface RootRouteChildren {
   LayoutRoute: typeof LayoutRouteWithChildren
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
-  SignupRoute: typeof SignupRoute
+  SignUpRoute: typeof SignUpRoute
+  Verify2faRoute: typeof Verify2faRoute
+  VerifyEmailRoute: typeof VerifyEmailRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupRouteImport
+    '/verify-email': {
+      id: '/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof VerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verify-2fa': {
+      id: '/verify-2fa'
+      path: '/verify-2fa'
+      fullPath: '/verify-2fa'
+      preLoaderRoute: typeof Verify2faRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-up': {
+      id: '/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof SignUpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -128,23 +178,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/about': {
-      id: '/_layout/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof LayoutAboutRouteImport
+    '/_layout/settings': {
+      id: '/_layout/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof LayoutSettingsRouteImport
       parentRoute: typeof LayoutRoute
     }
   }
 }
 
 interface LayoutRouteChildren {
-  LayoutAboutRoute: typeof LayoutAboutRoute
+  LayoutSettingsRoute: typeof LayoutSettingsRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
-  LayoutAboutRoute: LayoutAboutRoute,
+  LayoutSettingsRoute: LayoutSettingsRoute,
   LayoutIndexRoute: LayoutIndexRoute,
 }
 
@@ -155,7 +205,9 @@ const rootRouteChildren: RootRouteChildren = {
   LayoutRoute: LayoutRouteWithChildren,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
-  SignupRoute: SignupRoute,
+  SignUpRoute: SignUpRoute,
+  Verify2faRoute: Verify2faRoute,
+  VerifyEmailRoute: VerifyEmailRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

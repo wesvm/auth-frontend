@@ -53,7 +53,7 @@ const useAuth = () => {
     onSuccess: () => {
       toast.success('Account created successfully! Please verify your email.')
 
-      navigate({ to: '/verify-email' })
+      navigate({ to: '/verify-email', search: { token: '' } })
     },
   })
 

@@ -3,8 +3,10 @@ import { Link } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 import { ReusableForm } from '@/components/reusable-form'
 import { Button } from '@/components/ui/button'
+import { CardFooter } from '@/components/ui/card'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { Spinner } from '@/components/ui/spinner'
 import useAuth from '@/hooks/use-auth'
 import { type LoginSchema, loginSchema } from '@/lib/validations/auth'
 
@@ -20,7 +22,7 @@ export const LoginForm = () => {
   })
 
   return (
-    <ReusableForm form={form} onSubmit={login} className="gap-5">
+    <ReusableForm form={form} onSubmit={login}>
       <FormField
         control={form.control}
         name="login"
@@ -69,18 +71,24 @@ export const LoginForm = () => {
         )}
       />
 
-      <Button type="submit" className="w-full" disabled={isLoggingIn}>
-        {isLoggingIn ? 'Logging in...' : 'Login'}
-      </Button>
+      <CardFooter className="flex-col gap-2 p-0">
+        <Button type="submit" className="w-full" disabled={isLoggingIn}>
+          {isLoggingIn ? (
+            <>
+              <Spinner /> Logging in...
+            </>
+          ) : (
+            'Login'
+          )}
+        </Button>
 
-      <div className="flex flex-col border-t">
         <div className="text-sm text-center text-muted-foreground">
           Don't have an account?{' '}
           <Link to="/sign-up" className="text-foreground hover:underline">
             Sign up
           </Link>
         </div>
-      </div>
+      </CardFooter>
     </ReusableForm>
   )
 }

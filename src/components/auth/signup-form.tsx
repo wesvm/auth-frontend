@@ -3,8 +3,10 @@ import { Link } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 import { ReusableForm } from '@/components/reusable-form'
 import { Button } from '@/components/ui/button'
+import { CardFooter } from '@/components/ui/card'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { Spinner } from '@/components/ui/spinner'
 import useAuth from '@/hooks/use-auth'
 import { type SignUpSchema, signUpSchema } from '@/lib/validations/auth'
 
@@ -60,7 +62,13 @@ export const SignUpForm = () => {
           <FormItem>
             <FormLabel>Username</FormLabel>
             <FormControl>
-              <Input type="text" placeholder="elonmusk" disabled={isRegistering} {...field} />
+              <Input
+                type="text"
+                placeholder="elonmusk"
+                autoComplete="username"
+                disabled={isRegistering}
+                {...field}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -91,7 +99,13 @@ export const SignUpForm = () => {
           <FormItem>
             <FormLabel>Password</FormLabel>
             <FormControl>
-              <Input type="password" placeholder="••••••••" disabled={isRegistering} {...field} />
+              <Input
+                type="password"
+                placeholder="••••••••"
+                autoComplete="new-password"
+                disabled={isRegistering}
+                {...field}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -104,25 +118,37 @@ export const SignUpForm = () => {
           <FormItem>
             <FormLabel>Confirm Password</FormLabel>
             <FormControl>
-              <Input type="password" placeholder="••••••••" disabled={isRegistering} {...field} />
+              <Input
+                type="password"
+                placeholder="••••••••"
+                autoComplete="new-password"
+                disabled={isRegistering}
+                {...field}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
 
-      <Button type="submit" className="w-full" disabled={isRegistering}>
-        {isRegistering ? 'Creating account...' : 'Create account'}
-      </Button>
+      <CardFooter className="flex-col gap-2 p-0">
+        <Button type="submit" className="w-full" disabled={isRegistering}>
+          {isRegistering ? (
+            <>
+              <Spinner /> Creating account...
+            </>
+          ) : (
+            'Create account'
+          )}
+        </Button>
 
-      <div className="flex flex-col border-t">
         <div className="text-sm text-center text-muted-foreground">
           Already have an account?{' '}
           <Link to="/login" className="text-foreground hover:underline">
             Login
           </Link>
         </div>
-      </div>
+      </CardFooter>
     </ReusableForm>
   )
 }

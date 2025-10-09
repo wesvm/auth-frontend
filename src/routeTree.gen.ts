@@ -9,226 +9,254 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as VerifyEmailRouteImport } from './routes/verify-email'
-import { Route as Verify2faRouteImport } from './routes/verify-2fa'
-import { Route as SignUpRouteImport } from './routes/sign-up'
-import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
-import { Route as LayoutRouteImport } from './routes/_layout'
-import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
-import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
+import { Route as AuthLayoutRouteImport } from './routes/_auth-layout'
+import { Route as AppLayoutRouteImport } from './routes/_app-layout'
+import { Route as AppLayoutIndexRouteImport } from './routes/_app-layout/index'
+import { Route as AuthLayoutVerifyEmailRouteImport } from './routes/_auth-layout/verify-email'
+import { Route as AuthLayoutVerify2faRouteImport } from './routes/_auth-layout/verify-2fa'
+import { Route as AuthLayoutSignUpRouteImport } from './routes/_auth-layout/sign-up'
+import { Route as AuthLayoutResetPasswordRouteImport } from './routes/_auth-layout/reset-password'
+import { Route as AuthLayoutLoginRouteImport } from './routes/_auth-layout/login'
+import { Route as AuthLayoutForgotPasswordRouteImport } from './routes/_auth-layout/forgot-password'
+import { Route as AppLayoutSettingsRouteImport } from './routes/_app-layout/settings'
 
-const VerifyEmailRoute = VerifyEmailRouteImport.update({
-  id: '/verify-email',
-  path: '/verify-email',
+const AuthLayoutRoute = AuthLayoutRouteImport.update({
+  id: '/_auth-layout',
   getParentRoute: () => rootRouteImport,
 } as any)
-const Verify2faRoute = Verify2faRouteImport.update({
-  id: '/verify-2fa',
-  path: '/verify-2fa',
+const AppLayoutRoute = AppLayoutRouteImport.update({
+  id: '/_app-layout',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SignUpRoute = SignUpRouteImport.update({
-  id: '/sign-up',
-  path: '/sign-up',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
-  id: '/forgot-password',
-  path: '/forgot-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LayoutRoute = LayoutRouteImport.update({
-  id: '/_layout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LayoutIndexRoute = LayoutIndexRouteImport.update({
+const AppLayoutIndexRoute = AppLayoutIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => AppLayoutRoute,
 } as any)
-const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
+const AuthLayoutVerifyEmailRoute = AuthLayoutVerifyEmailRouteImport.update({
+  id: '/verify-email',
+  path: '/verify-email',
+  getParentRoute: () => AuthLayoutRoute,
+} as any)
+const AuthLayoutVerify2faRoute = AuthLayoutVerify2faRouteImport.update({
+  id: '/verify-2fa',
+  path: '/verify-2fa',
+  getParentRoute: () => AuthLayoutRoute,
+} as any)
+const AuthLayoutSignUpRoute = AuthLayoutSignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
+  getParentRoute: () => AuthLayoutRoute,
+} as any)
+const AuthLayoutResetPasswordRoute = AuthLayoutResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => AuthLayoutRoute,
+} as any)
+const AuthLayoutLoginRoute = AuthLayoutLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthLayoutRoute,
+} as any)
+const AuthLayoutForgotPasswordRoute =
+  AuthLayoutForgotPasswordRouteImport.update({
+    id: '/forgot-password',
+    path: '/forgot-password',
+    getParentRoute: () => AuthLayoutRoute,
+  } as any)
+const AppLayoutSettingsRoute = AppLayoutSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => AppLayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/forgot-password': typeof ForgotPasswordRoute
-  '/login': typeof LoginRoute
-  '/reset-password': typeof ResetPasswordRoute
-  '/sign-up': typeof SignUpRoute
-  '/verify-2fa': typeof Verify2faRoute
-  '/verify-email': typeof VerifyEmailRoute
-  '/settings': typeof LayoutSettingsRoute
-  '/': typeof LayoutIndexRoute
+  '/settings': typeof AppLayoutSettingsRoute
+  '/forgot-password': typeof AuthLayoutForgotPasswordRoute
+  '/login': typeof AuthLayoutLoginRoute
+  '/reset-password': typeof AuthLayoutResetPasswordRoute
+  '/sign-up': typeof AuthLayoutSignUpRoute
+  '/verify-2fa': typeof AuthLayoutVerify2faRoute
+  '/verify-email': typeof AuthLayoutVerifyEmailRoute
+  '/': typeof AppLayoutIndexRoute
 }
 export interface FileRoutesByTo {
-  '/forgot-password': typeof ForgotPasswordRoute
-  '/login': typeof LoginRoute
-  '/reset-password': typeof ResetPasswordRoute
-  '/sign-up': typeof SignUpRoute
-  '/verify-2fa': typeof Verify2faRoute
-  '/verify-email': typeof VerifyEmailRoute
-  '/settings': typeof LayoutSettingsRoute
-  '/': typeof LayoutIndexRoute
+  '/settings': typeof AppLayoutSettingsRoute
+  '/forgot-password': typeof AuthLayoutForgotPasswordRoute
+  '/login': typeof AuthLayoutLoginRoute
+  '/reset-password': typeof AuthLayoutResetPasswordRoute
+  '/sign-up': typeof AuthLayoutSignUpRoute
+  '/verify-2fa': typeof AuthLayoutVerify2faRoute
+  '/verify-email': typeof AuthLayoutVerifyEmailRoute
+  '/': typeof AppLayoutIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_layout': typeof LayoutRouteWithChildren
-  '/forgot-password': typeof ForgotPasswordRoute
-  '/login': typeof LoginRoute
-  '/reset-password': typeof ResetPasswordRoute
-  '/sign-up': typeof SignUpRoute
-  '/verify-2fa': typeof Verify2faRoute
-  '/verify-email': typeof VerifyEmailRoute
-  '/_layout/settings': typeof LayoutSettingsRoute
-  '/_layout/': typeof LayoutIndexRoute
+  '/_app-layout': typeof AppLayoutRouteWithChildren
+  '/_auth-layout': typeof AuthLayoutRouteWithChildren
+  '/_app-layout/settings': typeof AppLayoutSettingsRoute
+  '/_auth-layout/forgot-password': typeof AuthLayoutForgotPasswordRoute
+  '/_auth-layout/login': typeof AuthLayoutLoginRoute
+  '/_auth-layout/reset-password': typeof AuthLayoutResetPasswordRoute
+  '/_auth-layout/sign-up': typeof AuthLayoutSignUpRoute
+  '/_auth-layout/verify-2fa': typeof AuthLayoutVerify2faRoute
+  '/_auth-layout/verify-email': typeof AuthLayoutVerifyEmailRoute
+  '/_app-layout/': typeof AppLayoutIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/settings'
     | '/forgot-password'
     | '/login'
     | '/reset-password'
     | '/sign-up'
     | '/verify-2fa'
     | '/verify-email'
-    | '/settings'
     | '/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/settings'
     | '/forgot-password'
     | '/login'
     | '/reset-password'
     | '/sign-up'
     | '/verify-2fa'
     | '/verify-email'
-    | '/settings'
     | '/'
   id:
     | '__root__'
-    | '/_layout'
-    | '/forgot-password'
-    | '/login'
-    | '/reset-password'
-    | '/sign-up'
-    | '/verify-2fa'
-    | '/verify-email'
-    | '/_layout/settings'
-    | '/_layout/'
+    | '/_app-layout'
+    | '/_auth-layout'
+    | '/_app-layout/settings'
+    | '/_auth-layout/forgot-password'
+    | '/_auth-layout/login'
+    | '/_auth-layout/reset-password'
+    | '/_auth-layout/sign-up'
+    | '/_auth-layout/verify-2fa'
+    | '/_auth-layout/verify-email'
+    | '/_app-layout/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  LayoutRoute: typeof LayoutRouteWithChildren
-  ForgotPasswordRoute: typeof ForgotPasswordRoute
-  LoginRoute: typeof LoginRoute
-  ResetPasswordRoute: typeof ResetPasswordRoute
-  SignUpRoute: typeof SignUpRoute
-  Verify2faRoute: typeof Verify2faRoute
-  VerifyEmailRoute: typeof VerifyEmailRoute
+  AppLayoutRoute: typeof AppLayoutRouteWithChildren
+  AuthLayoutRoute: typeof AuthLayoutRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/verify-email': {
-      id: '/verify-email'
-      path: '/verify-email'
-      fullPath: '/verify-email'
-      preLoaderRoute: typeof VerifyEmailRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/verify-2fa': {
-      id: '/verify-2fa'
-      path: '/verify-2fa'
-      fullPath: '/verify-2fa'
-      preLoaderRoute: typeof Verify2faRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sign-up': {
-      id: '/sign-up'
-      path: '/sign-up'
-      fullPath: '/sign-up'
-      preLoaderRoute: typeof SignUpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/forgot-password': {
-      id: '/forgot-password'
-      path: '/forgot-password'
-      fullPath: '/forgot-password'
-      preLoaderRoute: typeof ForgotPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_layout': {
-      id: '/_layout'
+    '/_auth-layout': {
+      id: '/_auth-layout'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof LayoutRouteImport
+      preLoaderRoute: typeof AuthLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_layout/': {
-      id: '/_layout/'
+    '/_app-layout': {
+      id: '/_app-layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app-layout/': {
+      id: '/_app-layout/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof LayoutIndexRouteImport
-      parentRoute: typeof LayoutRoute
+      preLoaderRoute: typeof AppLayoutIndexRouteImport
+      parentRoute: typeof AppLayoutRoute
     }
-    '/_layout/settings': {
-      id: '/_layout/settings'
+    '/_auth-layout/verify-email': {
+      id: '/_auth-layout/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof AuthLayoutVerifyEmailRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
+    '/_auth-layout/verify-2fa': {
+      id: '/_auth-layout/verify-2fa'
+      path: '/verify-2fa'
+      fullPath: '/verify-2fa'
+      preLoaderRoute: typeof AuthLayoutVerify2faRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
+    '/_auth-layout/sign-up': {
+      id: '/_auth-layout/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof AuthLayoutSignUpRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
+    '/_auth-layout/reset-password': {
+      id: '/_auth-layout/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof AuthLayoutResetPasswordRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
+    '/_auth-layout/login': {
+      id: '/_auth-layout/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLayoutLoginRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
+    '/_auth-layout/forgot-password': {
+      id: '/_auth-layout/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof AuthLayoutForgotPasswordRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
+    '/_app-layout/settings': {
+      id: '/_app-layout/settings'
       path: '/settings'
       fullPath: '/settings'
-      preLoaderRoute: typeof LayoutSettingsRouteImport
-      parentRoute: typeof LayoutRoute
+      preLoaderRoute: typeof AppLayoutSettingsRouteImport
+      parentRoute: typeof AppLayoutRoute
     }
   }
 }
 
-interface LayoutRouteChildren {
-  LayoutSettingsRoute: typeof LayoutSettingsRoute
-  LayoutIndexRoute: typeof LayoutIndexRoute
+interface AppLayoutRouteChildren {
+  AppLayoutSettingsRoute: typeof AppLayoutSettingsRoute
+  AppLayoutIndexRoute: typeof AppLayoutIndexRoute
 }
 
-const LayoutRouteChildren: LayoutRouteChildren = {
-  LayoutSettingsRoute: LayoutSettingsRoute,
-  LayoutIndexRoute: LayoutIndexRoute,
+const AppLayoutRouteChildren: AppLayoutRouteChildren = {
+  AppLayoutSettingsRoute: AppLayoutSettingsRoute,
+  AppLayoutIndexRoute: AppLayoutIndexRoute,
 }
 
-const LayoutRouteWithChildren =
-  LayoutRoute._addFileChildren(LayoutRouteChildren)
+const AppLayoutRouteWithChildren = AppLayoutRoute._addFileChildren(
+  AppLayoutRouteChildren,
+)
+
+interface AuthLayoutRouteChildren {
+  AuthLayoutForgotPasswordRoute: typeof AuthLayoutForgotPasswordRoute
+  AuthLayoutLoginRoute: typeof AuthLayoutLoginRoute
+  AuthLayoutResetPasswordRoute: typeof AuthLayoutResetPasswordRoute
+  AuthLayoutSignUpRoute: typeof AuthLayoutSignUpRoute
+  AuthLayoutVerify2faRoute: typeof AuthLayoutVerify2faRoute
+  AuthLayoutVerifyEmailRoute: typeof AuthLayoutVerifyEmailRoute
+}
+
+const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
+  AuthLayoutForgotPasswordRoute: AuthLayoutForgotPasswordRoute,
+  AuthLayoutLoginRoute: AuthLayoutLoginRoute,
+  AuthLayoutResetPasswordRoute: AuthLayoutResetPasswordRoute,
+  AuthLayoutSignUpRoute: AuthLayoutSignUpRoute,
+  AuthLayoutVerify2faRoute: AuthLayoutVerify2faRoute,
+  AuthLayoutVerifyEmailRoute: AuthLayoutVerifyEmailRoute,
+}
+
+const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
+  AuthLayoutRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
-  LayoutRoute: LayoutRouteWithChildren,
-  ForgotPasswordRoute: ForgotPasswordRoute,
-  LoginRoute: LoginRoute,
-  ResetPasswordRoute: ResetPasswordRoute,
-  SignUpRoute: SignUpRoute,
-  Verify2faRoute: Verify2faRoute,
-  VerifyEmailRoute: VerifyEmailRoute,
+  AppLayoutRoute: AppLayoutRouteWithChildren,
+  AuthLayoutRoute: AuthLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -4,7 +4,7 @@ import { TwoFaSettings } from '@/components/settings/tfa'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-export const Route = createFileRoute('/_layout/settings')({
+export const Route = createFileRoute('/_app-layout/settings')({
   component: Settings,
 })
 

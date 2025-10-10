@@ -28,12 +28,12 @@ export const LoginForm = () => {
         name="login"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Username</FormLabel>
+            <FormLabel>Username or Email</FormLabel>
             <FormControl>
               <Input
                 type="text"
                 placeholder="elon"
-                autoComplete="username"
+                autoComplete="username|email"
                 disabled={isLoggingIn}
                 {...field}
               />
@@ -71,7 +71,7 @@ export const LoginForm = () => {
         )}
       />
 
-      <CardFooter className="flex-col gap-2 p-0">
+      <CardFooter className="flex-col gap-2 p-0 border-t mt-2">
         <Button type="submit" className="w-full" disabled={isLoggingIn}>
           {isLoggingIn ? (
             <>

@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { ReusableForm } from '@/components/reusable-form'
-import { Button } from '@/components/ui/button'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { type ForgotPasswordSchema, forgotPasswordSchema } from '@/lib/validations/auth'
@@ -9,9 +8,10 @@ import { type ForgotPasswordSchema, forgotPasswordSchema } from '@/lib/validatio
 interface Props {
   onSubmit: (data: ForgotPasswordSchema) => void
   isForgettingPassword: boolean
+  children?: React.ReactNode
 }
 
-export const ForgotPasswordForm = ({ onSubmit, isForgettingPassword }: Props) => {
+export const ForgotPasswordForm = ({ onSubmit, isForgettingPassword, children }: Props) => {
   const form = useForm<ForgotPasswordSchema>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
@@ -20,7 +20,7 @@ export const ForgotPasswordForm = ({ onSubmit, isForgettingPassword }: Props) =>
   })
 
   return (
-    <ReusableForm form={form} onSubmit={onSubmit} className="gap-5">
+    <ReusableForm form={form} onSubmit={onSubmit}>
       <FormField
         control={form.control}
         name="email"
@@ -40,10 +40,7 @@ export const ForgotPasswordForm = ({ onSubmit, isForgettingPassword }: Props) =>
           </FormItem>
         )}
       />
-
-      <Button type="submit" className="w-full" disabled={isForgettingPassword}>
-        {isForgettingPassword ? 'Sending...' : 'Send reset link'}
-      </Button>
+      {children}
     </ReusableForm>
   )
 }

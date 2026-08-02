@@ -92,7 +92,7 @@ export const ProfileSettings = () => {
       />
 
       <Button type="submit" disabled={isSaving || !hasChanges}>
-        {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        {isSaving && <Loader2 className="size-4 animate-spin" />}
         Save Changes
       </Button>
     </ReusableForm>

@@ -4,4 +4,6 @@ export interface User {
   email: string
   username: string
   role: 'user' | 'admin'
+  isEmailVerified?: boolean
+  isTwoFactorEnabled?: boolean
 }

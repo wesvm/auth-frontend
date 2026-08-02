@@ -1,3 +1,4 @@
+import type { FieldValues, UseFormSetError } from "react-hook-form"
 import { toast } from "sonner"
 import { authService } from "@/lib/api/auth"
 
@@ -5,6 +6,27 @@ export interface ApiError {
   message: string
   status?: number
   code?: string
+}
+
+/**
+ * Maps server validation errors (422) to react-hook-form fields.
+ */
+export function setFormErrors<TFieldValues extends FieldValues>(
+  error: any,
+  setError: UseFormSetError<TFieldValues>
+): boolean {
+  const serverErrors = error?.response?.data?.errors
+  if (!serverErrors) return false
+
+  Object.entries(serverErrors).forEach(([key, messages]) => {
+    const message = Array.isArray(messages) ? messages[0] : (messages as string)
+    setError(key as any, {
+      type: "server",
+      message,
+    })
+  })
+
+  return true
 }
 
 export const handleApiError = (error: any): ApiError => {

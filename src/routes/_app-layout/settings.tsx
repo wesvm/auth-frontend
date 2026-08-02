@@ -34,7 +34,7 @@ function Settings() {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="profile" className="space-y-4">
+        <TabsContent value="profile">
           <Card>
             <CardHeader>
               <CardTitle>Profile Information</CardTitle>
@@ -46,7 +46,7 @@ function Settings() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="security" className="space-y-4">
+        <TabsContent value="security">
           <Card>
             <CardHeader>
               <CardTitle>Change Password</CardTitle>
@@ -58,7 +58,7 @@ function Settings() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="2fa" className="space-y-4">
+        <TabsContent value="2fa">
           <Card>
             <CardHeader>
               <CardTitle>Two-Factor Authentication</CardTitle>

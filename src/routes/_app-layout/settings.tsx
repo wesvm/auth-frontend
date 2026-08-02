@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Lock, Shield, User } from 'lucide-react'
-import { TwoFaSettings } from '@/components/settings/tfa'
+import { ProfileSettings } from '@/components/settings/profile'
+import { TFASettings } from '@/components/settings/tfa'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
@@ -38,7 +39,9 @@ function Settings() {
               <CardTitle>Profile Information</CardTitle>
               <CardDescription>Update your account details</CardDescription>
             </CardHeader>
-            <CardContent>TODO: ProfileSettings component</CardContent>
+            <CardContent>
+              <ProfileSettings />
+            </CardContent>
           </Card>
         </TabsContent>
 
@@ -59,7 +62,7 @@ function Settings() {
               <CardDescription>Add an extra layer of security to your account</CardDescription>
             </CardHeader>
             <CardContent>
-              <TwoFaSettings />
+              <TFASettings />
             </CardContent>
           </Card>
         </TabsContent>

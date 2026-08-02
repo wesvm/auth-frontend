@@ -24,7 +24,7 @@ function Layout() {
   ]
 
   return (
-    <div className="h-dvh bg-background">
+    <div className="min-h-dvh bg-background flex flex-col">
       <header className="sticky top-0 z-50 border-b bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-card/50">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="flex h-16 items-center justify-between">
@@ -62,7 +62,7 @@ function Layout() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 max-w-2xl">
+      <main className="flex-1 container mx-auto px-4 pt-6 pb-24 md:py-8 max-w-2xl">
         <Outlet />
       </main>
 

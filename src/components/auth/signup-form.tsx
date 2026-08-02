@@ -8,6 +8,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { Input } from '@/components/ui/input'
 import { Spinner } from '@/components/ui/spinner'
 import useAuth from '@/hooks/use-auth'
+import { setFormErrors } from '@/lib/errors'
 import { type SignUpSchema, signUpSchema } from '@/lib/validations/auth'
 
 export const SignUpForm = () => {
@@ -25,18 +26,7 @@ export const SignUpForm = () => {
 
   const onSubmit = (data: SignUpSchema) => {
     registerMutation.mutate(data, {
-      onError: (error: any) => {
-        const serverErrors = error.response?.data?.errors
-
-        if (serverErrors) {
-          Object.keys(serverErrors).forEach((key) => {
-            form.setError(key as keyof SignUpSchema, {
-              type: 'server',
-              message: serverErrors[key][0],
-            })
-          })
-        }
-      },
+      onError: (error: any) => setFormErrors(error, form.setError),
     })
   }
 

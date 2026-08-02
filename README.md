@@ -1,4 +1,4 @@
-# SFull Authentication System (Frontend)
+# Full Authentication System (Frontend)
 
 Una aplicación de autenticación completa desarrollada con **React 19**, **TypeScript** y **Vite**.
 

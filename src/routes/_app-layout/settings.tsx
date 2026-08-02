@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Lock, Shield, User } from 'lucide-react'
+import { PasswordSettings } from '@/components/settings/password'
 import { ProfileSettings } from '@/components/settings/profile'
 import { TFASettings } from '@/components/settings/tfa'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -51,7 +52,9 @@ function Settings() {
               <CardTitle>Change Password</CardTitle>
               <CardDescription>Update your password to keep your account secure</CardDescription>
             </CardHeader>
-            <CardContent>TODO: UpdatePasswordSettings component</CardContent>
+            <CardContent>
+              <PasswordSettings />
+            </CardContent>
           </Card>
         </TabsContent>
 

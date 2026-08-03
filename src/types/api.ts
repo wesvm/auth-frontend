@@ -1,7 +1,7 @@
 import type { User } from "@/types/models"
 
 export interface ApiResponse<T = any> {
-  status: number
+  status?: number
   message: string
   data?: T
   errors?: Record<string, string[]>

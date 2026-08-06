@@ -2,11 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Link } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 import { ReusableForm } from '@/components/reusable-form'
-import { Button } from '@/components/ui/button'
 import { CardFooter } from '@/components/ui/card'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Spinner } from '@/components/ui/spinner'
+import { LoadingButton } from '@/components/ui/loading-button'
 import useAuth from '@/hooks/use-auth'
 import { setFormErrors } from '@/lib/errors'
 import { type SignUpSchema, signUpSchema } from '@/lib/validations/auth'
@@ -122,15 +121,14 @@ export const SignUpForm = () => {
       />
 
       <CardFooter className="flex-col gap-2 p-0">
-        <Button type="submit" className="w-full" disabled={isRegistering}>
-          {isRegistering ? (
-            <>
-              <Spinner /> Creating account...
-            </>
-          ) : (
-            'Create account'
-          )}
-        </Button>
+        <LoadingButton
+          type="submit"
+          className="w-full"
+          isLoading={isRegistering}
+          loadingText="Creating account..."
+        >
+          Create account
+        </LoadingButton>
 
         <div className="text-sm text-center text-muted-foreground">
           Already have an account?{' '}

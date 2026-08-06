@@ -2,11 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Link } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 import { ReusableForm } from '@/components/reusable-form'
-import { Button } from '@/components/ui/button'
 import { CardFooter } from '@/components/ui/card'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Spinner } from '@/components/ui/spinner'
+import { LoadingButton } from '@/components/ui/loading-button'
 import useAuth from '@/hooks/use-auth'
 import { type LoginSchema, loginSchema } from '@/lib/validations/auth'
 
@@ -72,15 +71,14 @@ export const LoginForm = () => {
       />
 
       <CardFooter className="flex-col gap-2 p-0 border-t mt-2">
-        <Button type="submit" className="w-full" disabled={isLoggingIn}>
-          {isLoggingIn ? (
-            <>
-              <Spinner /> Logging in...
-            </>
-          ) : (
-            'Login'
-          )}
-        </Button>
+        <LoadingButton
+          type="submit"
+          className="w-full"
+          isLoading={isLoggingIn}
+          loadingText="Logging in..."
+        >
+          Login
+        </LoadingButton>
 
         <div className="text-sm text-center text-muted-foreground">
           Don't have an account?{' '}
